@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistemas de Notas Fiscais - UberDist</title>
+	<h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+	<div id="cabecalho">
+		<h:graphicImage library="imagens" name="logo-uber.png" id="logoCompany"/>
+	</div>
+	<div id="conteudo">
+		<h2>Login no Sistema</h2>
+		<h:form id="formLogin">
+			<h:panelGrid columns="2" styleClass="campos">
+			
+			<h:outputLabel value="Login:"/>
+			<h:inputText value="#{usuarioBean.usuario.login}" required="true" requiredMessage="Campo login obrigatório." />
+			
+			<h:outputLabel value="Senha:"/>
+			<h:inputText  value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="Campo senha obrigatório."/>
+			
+			<h:commandButton value="Entrar" action="#{usuarioBean.efetuaLogin}"/>
+				
+			</h:panelGrid>
+		</h:form>
+	</div>
+	<div id="rodape">
+		Copyright 2013. Todos os direitos reservados a Rodrigo Pereira.
+	</div>
+</h:body>
+</html>

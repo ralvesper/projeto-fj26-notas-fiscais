@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:body>
+
+	<ui:composition template="/_template.xhtml">
+		<ui:define name="corpo">
+
+			<h2>
+				<h:outputText value="Novo Produto"
+					rendered="#{empty produtoBean.produto.id}" />
+				<h:outputText value="Editar Produto"
+					rendered="#{not empty produtoBean.produto.id}" />
+			</h2>
+
+			<h:form id="formCadastro">
+
+				<fieldset>
+
+					<legend>Dados do Produto</legend>
+
+					<h:outputLabel value="Nome:" for="nome" />
+
+					<h:inputText id="nome" value="#{produtoBean.produto.nome}">
+						<f:ajax event="change" />
+					</h:inputText>
+
+
+					<h:outputLabel value="Descrição" for="descricao" />
+					<h:inputTextarea id="descricao"
+						value="#{produtoBean.produto.descricao}">
+						<f:ajax event="change" />
+					</h:inputTextarea>
+
+					<h:outputLabel value="Preço:" for="preco" />
+					<h:inputText id="preco" value="#{produtoBean.produto.preco}">
+						<f:ajax event="change" />
+					</h:inputText>
+
+
+					<h:commandButton value="Gravar" action="#{produtoBean.grava}">
+						<f:ajax exectute="@form" event="click" render=":listagem" />
+					</h:commandButton>
+
+				</fieldset>
+
+			</h:form>
+
+			<h2>Listagem de Produtos</h2>
+
+			<h:form id="listagem">
+				<h:dataTable styleClass="dados" rowClasses="impar,par"
+					value="#{produtoBean.produtos}" var="prod">
+					<h:column>
+						<f:facet name="header">Nome</f:facet>	
+				#{prod.nome}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>	
+				#{prod.descricao}
+			</h:column>
+					<h:column>
+						<f:facet name="header">Preço</f:facet>#{prod.preco}
+					<f:facet name="footer">
+							<h:outputText value="Total:" />#{produtoBean.somatorio}
+					</f:facet>
+
+					</h:column>
+					<h:column>
+						<h:commandLink action="#{produtoBean.remove(prod)}"
+							value="Remover">
+							<f:ajax render="@form" />
+						</h:commandLink>&nbsp;&nbsp;&nbsp;
+				
+				</h:column>
+					<h:column>
+						<h:commandLink value="Alterar">
+							<f:setPropertyActionListener value="#{prod}"
+								target="#{produtoBean.produto}" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
