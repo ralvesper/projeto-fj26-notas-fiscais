@@ -16,9 +16,13 @@
 				<h:outputText value="Editar Produto"
 					rendered="#{not empty produtoBean.produto.id}" />
 			</h2>
-
+			
+			<h:form id="formErro">
+				<h:messages styleClass="erros"/>
+			</h:form>
+			
 			<h:form id="formCadastro">
-
+				
 				<fieldset>
 
 					<legend>Dados do Produto</legend>
@@ -26,6 +30,7 @@
 					<h:outputLabel value="Nome:" for="nome" />
 
 					<h:inputText id="nome" value="#{produtoBean.produto.nome}">
+						<f:validator validatorId="comecaComMaiuscula"/>
 						<f:ajax event="change" />
 					</h:inputText>
 
@@ -37,13 +42,15 @@
 					</h:inputTextarea>
 
 					<h:outputLabel value="Preço:" for="preco" />
-					<h:inputText id="preco" value="#{produtoBean.produto.preco}">
+					<h:inputText id="preco" value="#{produtoBean.produto.preco}" required="true" requiredMessage="Preço Obrigatório"
+						validatorMessage="O valor mínimo é de 0,50">
+						<f:validateDoubleRange minimum="0.50"/>
 						<f:ajax event="change" />
 					</h:inputText>
 
 
 					<h:commandButton value="Gravar" action="#{produtoBean.grava}">
-						<f:ajax exectute="@form" event="click" render=":listagem" />
+						<f:ajax execute="@form" render=":listagem :formErro" />
 					</h:commandButton>
 
 				</fieldset>

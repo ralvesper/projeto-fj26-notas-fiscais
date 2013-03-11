@@ -1,17 +1,28 @@
 package br.com.caelum.notasfiscais.mb;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+import javax.validation.ValidationException;
 
 import br.com.caelum.notasfiscais.dao.DAO;
 import br.com.caelum.notasfiscais.modelo.Produto;
 
 @ManagedBean
 @ViewScoped
-public class ProdutoBean {
+public class ProdutoBean implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Produto produto = new Produto();
 	
 	private List<Produto> produtos = null;
@@ -51,7 +62,7 @@ public class ProdutoBean {
 	public void grava() {
 		DAO<Produto> dao = new DAO<Produto>(Produto.class);
 		
-		if (this.produto.getId() == null){
+		if (this.produto == null){
 			dao.adiciona(this.produto);			
 		}else{
 			dao.atualiza(this.produto);
@@ -70,7 +81,14 @@ public class ProdutoBean {
 		dao.remove(produto);
 		this.produtos = dao.listaTodos();
 		somatorio -= produto.getPreco().doubleValue();
-
 	}
+	
+	public void comecaComMaiuscula(FacesContext fc, UIComponent component, Object value) throws ValidationException{
+		String valor = value.toString();
+		if (!valor.matches("[A-Z].*")){
+			throw new ValidatorException( new FacesMessage("Deveria começar com maiúscula"));
+		} 
+	}
+	
 	
 }

@@ -5,7 +5,6 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Sistemas de Notas Fiscais - UberDist</title>
@@ -21,7 +20,7 @@
 			<p:dataTable value="#{listaNotasFiscaisBean.dataModel}" var="notaFiscal" paginator="true" rows="2" rowStyleClass="impar,par"
 				styleClass="dados" lazy="true">
 				<p:column headerText="CNPJ">
-					#{notaFiscal.cnpj}
+					<h:outputText value="#{notaFiscal.cnpj}" converter="cnpj"/> 
 				</p:column>
 				<p:column headerText="Data">
 					<h:outputText value="#{notaFiscal.data.time}">

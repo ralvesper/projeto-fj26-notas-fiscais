@@ -3,16 +3,23 @@ package br.com.caelum.notasfiscais.modelo;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Produto {
 	@Id @GeneratedValue
 	private Long id;
-
+	
+	@NotEmpty(message="Produto deve ter um nome válido")
 	private String nome;
-
+	
+	@NotEmpty(message="Produto deve ter uma descricao válida")
 	private String descricao;
-
+	
+	@Pattern(regexp="[0-9]")
 	private Double preco;
 
 	public Long getId() {
